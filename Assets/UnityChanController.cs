@@ -24,7 +24,7 @@ public class UnityChanController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W))
         {
 
 
@@ -34,10 +34,11 @@ public class UnityChanController : MonoBehaviour
 
         }
 
-        if(Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.W))
         {
             this.velocityZ *= this.coefficient;
             this.myAnimator.SetFloat("Speed", 0);
         }
+
     }
 }
