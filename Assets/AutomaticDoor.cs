@@ -18,7 +18,7 @@ public class AutomaticDoor : MonoBehaviour
     {
         // アニメーションパラメータをtrueにする。(ドアが開く)
         DoorSingleAnimator.SetBool("isOpen_Obj_1", false);
-        Debug.Log("Open");
+        
     }
 
     /// <summary>
@@ -29,6 +29,6 @@ public class AutomaticDoor : MonoBehaviour
     {
         // アニメーションパラメータをfalseにする。(ドアが閉まる)
         DoorSingleAnimator.SetBool("isOpen_Obj_1", true);
-        Debug.Log("Close");
+       
     }
 }
