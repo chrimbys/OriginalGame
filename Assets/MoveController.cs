@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class MoveController : MonoBehaviour
 {
@@ -44,16 +45,17 @@ public class MoveController : MonoBehaviour
 
     private void MoveToCursor()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        bool hasHit = Physics.Raycast(ray, out hit);
-        if (hasHit)
+        if (EventSystem.current.IsPointerOverGameObject()) return;
         {
-            GetComponent<NavMeshAgent>().destination = hit.point;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            bool hasHit = Physics.Raycast(ray, out hit);
+            if (hasHit)
+            {
+                GetComponent<NavMeshAgent>().destination = hit.point;
+            }
+
         }
-
-        this.myAnimator.SetFloat("Speed", agent.velocity.sqrMagnitude);
-
 
 
     }
