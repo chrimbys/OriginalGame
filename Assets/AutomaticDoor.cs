@@ -16,7 +16,7 @@ public class AutomaticDoor : MonoBehaviour
     /// <param name="other"></param>
 	private void OnTriggerEnter(Collider other)
     {
-        // アニメーションパラメータをtrueにする。(ドアが開く)
+        // アニメーションパラメータをfalseにする。(ドアが開く)
         DoorSingleAnimator.SetBool("isOpen_Obj_1", false);
         
     }

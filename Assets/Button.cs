@@ -5,40 +5,61 @@ using UnityEngine.UI;
 
 public class Button : MonoBehaviour
 {
-    private GameObject Key1;
-    private GameObject Key2;
-    private GameObject Key3;
-
+    private GameObject sKey1;
+    private GameObject sKey2;
+    private GameObject sKey3;
+    private GameObject treasureChest;
     private GameObject unitychan;
+    private GameObject entranceDoor;
 
     private float Distance1;
     private float Distance2;
     private float Distance3;
+    private float Distance4;
+    private float Distance5;
+
     float ItemGetDis = 1.5f;
+    float GoalItemDis = 2.5f;
 
     private GameObject MessageText;
 
     private KeyCounter keyCounter;
 
+    Fader fader;
+
     public void Start()
     {
-        Key1 = GameObject.Find("Key1");
-        Key2 = GameObject.Find("Key2");
-        Key3 = GameObject.Find("Key3");
+        sKey1 = GameObject.Find("SKey1");
+        sKey2 = GameObject.Find("SKey2");
+        sKey3 = GameObject.Find("SKey3");
+        treasureChest = GameObject.Find("TreasureChest");
         unitychan = GameObject.Find("unitychan");
+        entranceDoor = GameObject.Find("EntranceDoor");
         MessageText = GameObject.Find("MessageText");
         keyCounter = GameObject.Find("KeyCounter").GetComponent<KeyCounter>();
+        fader = GameObject.Find("Fader").GetComponent<Fader>();
     }
 
     public void Update()
     {
-        if (Key1 != null)
-        { Distance1 = (Key1.transform.position - unitychan.transform.position).sqrMagnitude; }
-        if (Key2 != null)
-        { Distance2 = (Key2.transform.position - unitychan.transform.position).sqrMagnitude; }
-        if (Key3 != null)
-        { Distance3 = (Key3.transform.position - unitychan.transform.position).sqrMagnitude; }
+        if (sKey1 != null)
+        { Distance1 = (sKey1.transform.position - unitychan.transform.position).sqrMagnitude; }
+        if (sKey2 != null)
+        { Distance2 = (sKey2.transform.position - unitychan.transform.position).sqrMagnitude; }
+        if (sKey3 != null)
+        { Distance3 = (sKey3.transform.position - unitychan.transform.position).sqrMagnitude; }
+        if (treasureChest != null)
+        { Distance4 = (treasureChest.transform.position - unitychan.transform.position).sqrMagnitude; }
+        
+         Distance5 = (entranceDoor.transform.position - unitychan.transform.position).sqrMagnitude; 
 
+        /*
+        if (Application.isEditor == true)
+        {
+          if(Input.GetKeyDown(KeyCode.Space))
+           {keyCounter.gKeyCount++;}
+        }
+        */
 
 
 
@@ -46,44 +67,72 @@ public class Button : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log(Distance3);
 
-
-        if (Distance1 <= ItemGetDis )
+        if (Distance1 <= ItemGetDis && sKey1)
         {
-            Debug.Log("Key1");
-            this.MessageText.GetComponent<Text>().text = "鍵を手に入れた!";
-            keyCounter.keyCount++;
+            Debug.Log("sKey1");
+            this.MessageText.GetComponent<Text>().text = "銀の鍵を手に入れた!";
+            keyCounter.skeyCount++;
 
             StartCoroutine("TextSet");
 
-            Destroy(Key1);
+            Destroy(sKey1);
 
         }
         if (Distance2 <= ItemGetDis)
         {
-            Debug.Log("Key2");
-            this.MessageText.GetComponent<Text>().text = "鍵を手に入れた!";
+            Debug.Log("sKey2");
+            this.MessageText.GetComponent<Text>().text = "銀の鍵を手に入れた!";
             StartCoroutine("TextSet");
+            keyCounter.skeyCount++;
 
-            Destroy(Key2);
+            Destroy(sKey2);
 
 
         }
-        if (Distance3 <= ItemGetDis)
+        if (Distance3 <= ItemGetDis && sKey3)
         {
-            Debug.Log("Key3");
+            Debug.Log("sKey3");
 
-            this.MessageText.GetComponent<Text>().text = "鍵を手に入れた!";
+            this.MessageText.GetComponent<Text>().text = "銀の鍵を手に入れた!";
             StartCoroutine("TextSet");
+            keyCounter.skeyCount++;
 
-            Destroy(Key3);
+            Destroy(sKey3);
 
 
         }
+
+        //sKey3個で宝箱から鍵がゲットできる
+        if(Distance4 <= GoalItemDis && treasureChest)
+        {
+            Debug.Log("tresureChest");
+
+            this.MessageText.GetComponent<Text>().text = "家の鍵を手に入れた!";
+            StartCoroutine("TextSet");
+
+            keyCounter.KeyType = true;
+            keyCounter.gKeyCount++;
+
+            Destroy(treasureChest);
+
+        }
+        if (Distance5 <= ItemGetDis)
+        {
+            Debug.Log("EntranceDoor");
+            if (keyCounter.gKeyCount == keyCounter.maxgKeyCount)
+            {
+                Debug.Log("Clear");
+                fader.isFadeOut = true;
+            }
+
+
+        }
+
 
 
     }
+
 
     IEnumerator TextSet()
     {

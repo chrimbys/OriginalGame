@@ -11,10 +11,11 @@ public class MoveController : MonoBehaviour
 
     private GameObject unitychan;
 
-
+    private NavMeshAgent agent;
 
     void Start()
     {
+        agent = GameObject.Find("unitychan").GetComponent<NavMeshAgent>();
         unitychan = GameObject.Find("unitychan");
         this.myAnimator = GetComponent<Animator>();
 
@@ -36,6 +37,7 @@ public class MoveController : MonoBehaviour
 
         }
 
+        this.myAnimator.SetFloat("Speed", agent.velocity.sqrMagnitude);
 
 
     }
@@ -50,12 +52,7 @@ public class MoveController : MonoBehaviour
             GetComponent<NavMeshAgent>().destination = hit.point;
         }
 
-        this.myAnimator.SetFloat("Speed", 1);
-
-        if (unitychan.transform.position == hit.point)
-        {
-            this.myAnimator.SetFloat("Speed", 0);
-        }
+        this.myAnimator.SetFloat("Speed", agent.velocity.sqrMagnitude);
 
 
 
